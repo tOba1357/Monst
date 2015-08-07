@@ -9,16 +9,20 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/quest_name"
             android:layout_weight="3"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:text="@string/quest_name"
+            android:id="@+id/text_view"/>
+
         <EditText
             android:id="@+id/quest_name"
             android:layout_width="match_parent"
@@ -26,18 +30,64 @@
             android:layout_weight="1"
             android:inputType="text" />
     </LinearLayout>
-    <Button
-        android:layout_width="wrap_content"
+
+    <RadioGroup
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/start_btn_name"
-        android:id="@+id/start_btn"/>
+        android:id="@+id/radio_group">
+
+        <RadioButton
+            android:id="@+id/radio_1"
+            android:checked="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1.運極募集板2"
+            />
+
+        <RadioButton
+            android:id="@+id/radio_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2.なんでもクエスト掲示板" />
+
+        <RadioButton
+            android:id="@+id/radio_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3.運極募集版1" />
+
+        <RadioButton
+            android:id="@+id/radio_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4.降臨ガチ攻略掲示板" />
+
+        <RadioButton
+            android:id="@+id/radio_22"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="22.神殿クエスト" />
+
+        <RadioButton
+            android:id="@+id/radio_33"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="33.運極限定タス/亀/曜日クエ" />
+
+    </RadioGroup>
+
 
     <TextView
+        android:id="@+id/result"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/result" />
+        android:layout_height="wrap_content" />
 
+    <Button
+        android:id="@+id/start_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/start_btn_name" />
 
 
 </LinearLayout>
