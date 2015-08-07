@@ -3,14 +3,11 @@ package com.example.owner.monst;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -23,17 +20,18 @@ import com.example.owner.monst.HttpConectionTools.HttpGet;
 import com.example.owner.monst.HttpConectionTools.UrlData;
 
 import java.net.MalformedURLException;
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class MainActivity extends Activity {
     final String TAG = MainActivity.class.getSimpleName();
+    private Handler handler;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        handler = null;
         setViews();
         setBtn();
     }
@@ -55,37 +53,44 @@ public class MainActivity extends Activity {
         final RadioButton radioButton = (RadioButton) findViewById(checkRadioNum);
         final String boarTitle = radioButton.getText().toString();
         final String rtnString = boarTitle.substring(0, boarTitle.indexOf("."));
-        Log.d(TAG, rtnString);
         return Integer.parseInt(rtnString);
+    }
+
+    private void startSearchMonstQuest(final int boardNum) {
+        final HttpGet httpGet = new HttpGet(getApplicationContext());
+        try {
+            httpGet.setUrl(UrlData.URL_TOP + boardNum);
+            httpGet.setCallBack(httpCallBack);
+            httpGet.execute();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     final View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            EditText editText = (EditText) findViewById(R.id.quest_name);
-            String questName = editText.getText().toString();
-            HttpGet httpGet = new HttpGet(getApplicationContext());
-            try {
-                httpGet.setUrl(UrlData.URL_TOP + getRadioBtnNum());
-                httpGet.setCallBack(httpCallBack);
-                httpGet.execute();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+            stopHandler();
+            startSearchMonstQuest(getRadioBtnNum());
         }
     };
 
     HttpCallBack httpCallBack = new HttpCallBack() {
         @Override
         public void onEndHttpCommunication(String result) {
+            Log.d(TAG, "Search");
             List<Quest> questList = HtmlAnalysis.splitQuest(result);
-            for(Quest quest : questList){
-                if(quest.getContent().contains(getQuestName())){
-                    startMonst(quest.getUrl());
-                    return;
+            for (Quest quest : questList) {
+                if (quest.getContent().contains(getQuestName())) {
+                    if ("数秒前".equals(quest.getTime())) {
+                        stopHandler();
+                        startMonst(quest.getUrl());
+                        return;
+                    }
+                    break;
                 }
             }
-            Toast.makeText(getApplicationContext(), "クエストが見つかりませんでした", Toast.LENGTH_LONG).show();
+            startHandler();
         }
 
         @Override
@@ -95,7 +100,7 @@ public class MainActivity extends Activity {
     };
 
 
-    private void startMonst(@NonNull final String url){
+    private void startMonst(@NonNull final String url) {
         TextView textView = (TextView) findViewById(R.id.text_view);
         textView.requestFocus();
         final Uri uri = Uri.parse(url);
@@ -104,9 +109,27 @@ public class MainActivity extends Activity {
     }
 
     @NonNull
-    private String getQuestName(){
+    private String getQuestName() {
         final EditText editText = (EditText) findViewById(R.id.quest_name);
         final String questName = editText.getText().toString();
         return questName;
     }
+
+    private void startHandler() {
+        handler = new Handler();
+        handler.postDelayed(handlerRunnable, 1000);
+    }
+
+    private void stopHandler(){
+        if(handler != null){
+            handler.removeCallbacks(null);
+        }
+    }
+
+    private Runnable handlerRunnable = new Runnable() {
+        @Override
+        public void run() {
+            startSearchMonstQuest(getRadioBtnNum());
+        }
+    };
 }
