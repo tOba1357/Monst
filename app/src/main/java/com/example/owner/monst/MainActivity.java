@@ -32,6 +32,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         handler = null;
+        showHandlerState();
         setViews();
         setBtn();
     }
@@ -43,7 +44,9 @@ public class MainActivity extends Activity {
 
     private void setBtn() {
         Button button = (Button) findViewById(R.id.start_btn);
-        button.setOnClickListener(clickListener);
+        button.setOnClickListener(startBtnClickListener);
+        button = (Button) findViewById(R.id.stop_btn);
+        button.setOnClickListener(stopBtnClickListener);
     }
 
 
@@ -67,7 +70,14 @@ public class MainActivity extends Activity {
         }
     }
 
-    final View.OnClickListener clickListener = new View.OnClickListener() {
+    final View.OnClickListener stopBtnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            stopHandler();
+        }
+    };
+
+    final View.OnClickListener startBtnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             stopHandler();
@@ -118,12 +128,15 @@ public class MainActivity extends Activity {
     private void startHandler() {
         handler = new Handler();
         handler.postDelayed(handlerRunnable, 1000);
+        showHandlerState();
     }
 
     private void stopHandler(){
         if(handler != null){
-            handler.removeCallbacks(null);
+            handler.removeCallbacks(handlerRunnable);
+            handler = null;
         }
+        showHandlerState();
     }
 
     private Runnable handlerRunnable = new Runnable() {
@@ -132,4 +145,13 @@ public class MainActivity extends Activity {
             startSearchMonstQuest(getRadioBtnNum());
         }
     };
+
+    private void showHandlerState(){
+        TextView textView = (TextView) findViewById(R.id.handler_state_text_view);
+        if(handler == null){
+            textView.setText("STOP");
+        }else{
+            textView.setText("START");
+        }
+    }
 }

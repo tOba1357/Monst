@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,83 +11,102 @@
 
 
     <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="@string/quest_name"
+                android:id="@+id/text_view" />
+
+            <EditText
+                android:id="@+id/quest_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="text" />
+        </LinearLayout>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/radio_group">
+
+            <RadioButton
+                android:id="@+id/radio_1"
+                android:checked="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1.運極募集板2" />
+
+            <RadioButton
+                android:id="@+id/radio_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2.なんでもクエスト掲示板" />
+
+            <RadioButton
+                android:id="@+id/radio_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="3.運極募集版1" />
+
+            <RadioButton
+                android:id="@+id/radio_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4.降臨ガチ攻略掲示板" />
+
+            <RadioButton
+                android:id="@+id/radio_22"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="22.神殿クエスト" />
+
+            <RadioButton
+                android:id="@+id/radio_33"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="33.運極限定タス/亀/曜日クエ" />
+
+        </RadioGroup>
+
 
         <TextView
+            android:id="@+id/handler_state_text_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:gravity="center"
-            android:text="@string/quest_name"
-            android:id="@+id/text_view"/>
-
-        <EditText
-            android:id="@+id/quest_name"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:inputType="text" />
+            android:layout_height="100px" />
     </LinearLayout>
 
-    <RadioGroup
-        android:layout_width="match_parent"
+
+    <LinearLayout
         android:layout_height="wrap_content"
-        android:id="@+id/radio_group">
-
-        <RadioButton
-            android:id="@+id/radio_1"
-            android:checked="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="1.運極募集板2"
-            />
-
-        <RadioButton
-            android:id="@+id/radio_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="2.なんでもクエスト掲示板" />
-
-        <RadioButton
-            android:id="@+id/radio_3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="3.運極募集版1" />
-
-        <RadioButton
-            android:id="@+id/radio_4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="4.降臨ガチ攻略掲示板" />
-
-        <RadioButton
-            android:id="@+id/radio_22"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="22.神殿クエスト" />
-
-        <RadioButton
-            android:id="@+id/radio_33"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="33.運極限定タス/亀/曜日クエ" />
-
-    </RadioGroup>
-
-
-    <TextView
-        android:id="@+id/result"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:orientation="vertical"
+        android:layout_gravity="bottom">
 
-    <Button
-        android:id="@+id/start_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/start_btn_name" />
+        <Button
+            android:id="@+id/start_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/start_btn_name" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/stop_btn"
+            android:text="stop" />
+    </LinearLayout>
 
 
-</LinearLayout>
+</GridLayout>
